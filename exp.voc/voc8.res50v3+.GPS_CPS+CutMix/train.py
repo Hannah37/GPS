@@ -211,10 +211,10 @@ with Engine(custom_parser=parser) as engine:
             lr = lr_policy.get_lr(current_idx)
 
             # reset the learning rate
-            optimizer_t.param_groups[0]['lr'] = config.fixed_lr
-            optimizer_t.param_groups[1]['lr'] = config.fixed_lr
+            optimizer_t.param_groups[0]['lr'] = lr
+            optimizer_t.param_groups[1]['lr'] = lr
             for i in range(2, len(optimizer_t.param_groups)):
-                optimizer_t.param_groups[i]['lr'] = config.fixed_lr
+                optimizer_t.param_groups[i]['lr'] = lr
             loss = loss_sup_t
             loss.backward()
             optimizer_t.step()
@@ -407,10 +407,10 @@ with Engine(custom_parser=parser) as engine:
                 loss_sup_t2 = loss_sup_t2 / engine.world_size
 
             # reset the learning rate
-            optimizer_t.param_groups[0]['lr'] = lr
-            optimizer_t.param_groups[1]['lr'] = lr
+            optimizer_t.param_groups[0]['lr'] = config.fixed_lr
+            optimizer_t.param_groups[1]['lr'] = config.fixed_lr
             for i in range(2, len(optimizer_t.param_groups)):
-                optimizer_t.param_groups[i]['lr'] = lr
+                optimizer_t.param_groups[i]['lr'] = config.fixed_lr
             loss = gps_stu_loss + loss_sup_t2
             loss.backward()
             optimizer_t.step()
